@@ -5,7 +5,7 @@ namespace Queue.Controllers;
 
 
 [ApiController]
-public class QueueController
+public class QueueController : IDisposable
 {
     private readonly QueueService _queueService;
 
@@ -19,5 +19,9 @@ public class QueueController
     {
         return _queueService.GetSpot(id);
     }
-    
+
+    public void Dispose()
+    {
+        //
+    }
 }

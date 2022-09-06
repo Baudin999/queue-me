@@ -2,9 +2,9 @@
 
 namespace Queue.Services;
 
-public class QueueService
+public class QueueService : IDisposable
 {
-    private readonly Queue<Session> _queue = new();
+    public readonly Queue<Session> _queue = new();
 
     public void Enqueue(Session session)
     {
@@ -30,5 +30,10 @@ public class QueueService
     public bool Contains(Session session)
     {
         return GetSpot(session.Id) > -1;
+    }
+
+    public void Dispose()
+    {
+        //
     }
 }

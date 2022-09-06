@@ -8,7 +8,7 @@ public class Session
     public Session(Guid id)
     {
         Id = id;
-        TTL = DateTime.Now + TimeSpan.FromMinutes(5);
+        TTL = DateTime.Now.Add(TimeSpan.FromMinutes(5));
     }
 
     public override bool Equals(object? obj)
