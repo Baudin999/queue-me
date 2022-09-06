@@ -6,7 +6,7 @@ public class SessionService : IDisposable
 {
     const int _maxSessions = 3;
     const int _enqueueWait = 300;
-    private const int _sessionClean = 300;
+    const int _sessionClean = 300;
     private bool continueProcess = true;
     
     public readonly Dictionary<Guid, Session> _sessions = new();
@@ -18,6 +18,10 @@ public class SessionService : IDisposable
         Task.Run(() =>
         {
             EnqueueSessions(Task.CompletedTask);
+        });
+
+        Task.Run(() =>
+        {
             EndSession(Task.CompletedTask);
         });
     }
@@ -27,6 +31,8 @@ public class SessionService : IDisposable
         //
         lock (_sessions)
         {
+            Console.WriteLine("EnqueueSessions sessions: " + _sessions.Count);
+            Console.WriteLine("EnqueueSessions queue: " + _queueService._queue.Count);
             while (_sessions.Count < _maxSessions)
             {
                 if (_sessions.Count < _maxSessions)
@@ -46,6 +52,8 @@ public class SessionService : IDisposable
         //
         lock (_sessions)
         {
+            Console.WriteLine("EndSession sessions: " + _sessions.Count);
+            Console.WriteLine("EndSession queue: " + _queueService._queue.Count);
             var removableSessions = new List<Guid>();
             
             var now = DateTime.Now;
